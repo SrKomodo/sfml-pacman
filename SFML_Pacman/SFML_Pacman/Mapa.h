@@ -8,7 +8,7 @@ class Mapa {
 		Mapa(std::string filePath);
 		~Mapa();
 
-		void draw(sf::RenderWindow& window);
+		void draw(sf::RenderWindow* window);
 		int getTile(sf::Vector2f pos);
 		void removeTile(sf::Vector2f pos);
 
@@ -45,7 +45,7 @@ Mapa::~Mapa() {
 
 }
 
-inline void Mapa::draw(sf::RenderWindow& window) {
+inline void Mapa::draw(sf::RenderWindow* window) {
 
 	for (int x = 0; x < 28; x++) {
 		for (int y = 0; y < 31; y++) {
@@ -53,7 +53,7 @@ inline void Mapa::draw(sf::RenderWindow& window) {
 			if ( nivel[x][y] != 0 ) {
 				wall.setPosition((float)x * 16, (float)y * 16);
 				wall.setTextureRect(sf::IntRect((nivel[x][y] - 1) * 16, 0, 16, 16));
-				window.draw(wall);
+				window->draw(wall);
 			}
 
 		}
