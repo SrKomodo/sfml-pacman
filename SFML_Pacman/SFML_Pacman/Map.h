@@ -3,10 +3,10 @@
 #include <fstream>
 #include <iostream>
 
-class Mapa {
+class Map {
 	public:
-		Mapa(std::string filePath);
-		~Mapa();
+		Map(std::string filePath);
+		~Map();
 
 		void draw(sf::RenderWindow* window);
 		int getTile(sf::Vector2f pos);
@@ -18,7 +18,7 @@ class Mapa {
 		sf::RectangleShape wall = sf::RectangleShape(sf::Vector2f(16,16));
 };
 
-Mapa::Mapa(std::string filePath) {
+Map::Map(std::string filePath) {
 
 	std::ifstream archivo(filePath);
 
@@ -41,11 +41,11 @@ Mapa::Mapa(std::string filePath) {
 	wall.setTexture( &texture );
 }
 
-Mapa::~Mapa() {
+Map::~Map() {
 
 }
 
-inline void Mapa::draw(sf::RenderWindow* window) {
+inline void Map::draw(sf::RenderWindow* window) {
 
 	for (int x = 0; x < 28; x++) {
 		for (int y = 0; y < 31; y++) {
@@ -61,10 +61,10 @@ inline void Mapa::draw(sf::RenderWindow* window) {
 
 }
 
-inline int Mapa::getTile(sf::Vector2f pos) {
+inline int Map::getTile(sf::Vector2f pos) {
 	return nivel[(int)pos.x / 16][(int)pos.y / 16];
 }
 
-inline void Mapa::removeTile(sf::Vector2f pos) {
+inline void Map::removeTile(sf::Vector2f pos) {
 	nivel[(int)pos.x / 16][(int)pos.y / 16] = 0;
 }

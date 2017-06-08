@@ -6,7 +6,7 @@
 
 class Player {
 	public:
-		Player(Mapa* mapa);
+		Player(Map* mapa);
 		~Player();
 
 		void draw(sf::RenderWindow* window);
@@ -23,10 +23,10 @@ class Player {
 		sf::Texture texture;
 
 		sf::Vector2f dir, dirBuffer;
-		Mapa* map;
+		Map* map;
 };
 
-Player::Player(Mapa* mapa) {
+Player::Player(Map* mapa) {
 	texture.loadFromFile("Recursos/pacman.png");
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));

@@ -1,15 +1,16 @@
 #include <iostream>
+#include <random>
 #include <SFML\Graphics.hpp>
 
-#include "Mapa.h"
+#include "Map.h"
 #include "Player.h"
 
 int main() {
-
 	sf::RenderWindow window(sf::VideoMode(448,496), "Pacman");
 
-	Mapa mapa("Recursos/mapa.txt");
-	Player player = Player(&mapa);
+	Map map("Recursos/map.txt");
+
+	Player player = Player(&map);
 
 	sf::Event event;
 	sf::Clock clock;
@@ -44,13 +45,12 @@ int main() {
 		}
 
 		if ( clock.getElapsedTime().asSeconds() >= 1 / 60 ) {
-			clock.restart();
 			player.updateLogic();
 		}
 
 		window.clear();
 		
-		mapa.draw(&window);
+		map.draw(&window);
 
 		player.draw(&window);
 
