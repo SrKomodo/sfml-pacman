@@ -10,8 +10,7 @@ public:
 	Entity(Map* mapToLoad, std::string path, sf::Vector2f position);
 
 	void draw(sf::RenderWindow* window);
-	void updateLogic();
-	void setDirection(sf::Vector2f direction);
+	void updateLogic() {};
 
 protected:
 	sf::Texture texture;
@@ -20,7 +19,10 @@ protected:
 	sf::Vector2f dir, dirBuffer;
 	Map* map;
 
+	void setDirection(sf::Vector2f direction);
+	void mapCollision();
 	bool collidesWithWall(sf::Vector2f pos);
+	void onDirChange() {};
 
 };
 
@@ -40,9 +42,10 @@ inline void Entity::draw(sf::RenderWindow * window) {
 	window->draw(sprite);
 }
 
-inline void Entity::updateLogic() {
+inline void Entity::mapCollision() {
 	if (!collidesWithWall(sprite.getPosition() + dirBuffer)) {
 		dir = dirBuffer;
+		onDirChange();
 	}
 
 	if (collidesWithWall(sprite.getPosition() + dir)) {
@@ -61,10 +64,6 @@ inline void Entity::updateLogic() {
 
 	if (sprite.getPosition().x < 0) {
 		sprite.setPosition(sf::Vector2f(448, sprite.getPosition().y));
-	}
-
-	if (map->getTile(sprite.getPosition()) == 2) {
-		map->removeTile(sprite.getPosition());
 	}
 }
 
