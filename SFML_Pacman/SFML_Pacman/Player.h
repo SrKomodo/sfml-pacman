@@ -65,12 +65,12 @@ inline bool Player::collidesWithWall(sf::Vector2f pos) {
 
 inline void Player::updateLogic() {
 
-	if (!collidesWithWall(sprite.getPosition() + sf::Vector2f(dirBuffer.x * 8, dirBuffer.y * 8))) {
+	if (!collidesWithWall(sprite.getPosition() + dirBuffer)) {
 		dir = dirBuffer;
 		sprite.setRotation(atan2(dir.y, dir.x) * (180.0 / M_PI));
 	}
 
-	if (collidesWithWall( sprite.getPosition() + sf::Vector2f(dir.x, dir.y) )) {
+	if (collidesWithWall( sprite.getPosition() + dir )) {
 		dir = sf::Vector2f(0, 0);
 	}
 

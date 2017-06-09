@@ -3,14 +3,14 @@
 #include <SFML\Graphics.hpp>
 
 #include "Map.h"
-#include "Player.h"
+#include "Entity.h"
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(448,496), "Pacman");
 
 	Map map("Recursos/map.txt");
 
-	Player player = Player(&map);
+	Entity player = Entity(&map, "Recursos/pacman.png", sf::Vector2f(264, 24));
 
 	sf::Event event;
 	sf::Clock clock;
