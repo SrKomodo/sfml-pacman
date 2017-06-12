@@ -4,15 +4,30 @@
 #include <math.h>
 
 class Player : public Entity {
-
 	using Entity::Entity;
 
 public:
+	Player(Map* mapToLoad, std::string path, sf::Vector2f position);
+	
 	void updateLogic();
 	void onDirChange();
+
+private:
+	float animationFrame;
+
 };
 
+Player::Player(Map* mapToLoad, std::string path, sf::Vector2f position) : Entity(mapToLoad, path, position) {
+	sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	animationFrame = 0;
+}
+
 inline void Player::updateLogic() {
+	
+	sprite.setTextureRect(sf::IntRect( floorf(animationFrame / 16.f) * 16, 0, 16, 16));
+	animationFrame += 4.f;
+	animationFrame = fmod(animationFrame, 16.f * 6.f);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		setDirection(sf::Vector2f(-1, 0));
 	}
@@ -33,5 +48,5 @@ inline void Player::updateLogic() {
 }
 
 inline void Player::onDirChange() {
-	sprite.setRotation(atan2(dir.y, dir.x) * (180.0 / M_PI));
+	sprite.setRotation(atan2(dir.y, dir.x) * (180.f / (float)M_PI));
 }

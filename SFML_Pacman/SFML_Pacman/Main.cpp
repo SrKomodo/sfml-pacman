@@ -4,16 +4,24 @@
 
 #include "Map.h"
 #include "Player.h"
+#include "Monster.h"
 
 int main() {
+
+	sf::Clock clock;
+	sf::Time accumulator = sf::Time::Zero;
+	sf::Time ups = sf::seconds(1.f / 60.f);
+
 	sf::RenderWindow window(sf::VideoMode(448,496), "Pacman");
 
 	Map map("Recursos/map.txt");
 
-	Player player = Player(&map, "Recursos/pacman.png", sf::Vector2f(264, 24));
+	Player player = Player(&map, "Recursos/pacman.png", sf::Vector2f(224, 376));
+
+	Monster monster = Monster(&map, "Recursos/ghost.png", sf::Vector2f(232, 184));
 
 	sf::Event event;
-	sf::Clock clock;
+
 	while (window.isOpen()) {
 
 		while (window.pollEvent(event)) {
@@ -31,17 +39,22 @@ int main() {
 			}
 		}
 
-		if ( clock.getElapsedTime().asSeconds() >= 1 / 60 ) {
+		while (accumulator > ups) {
+			accumulator -= ups;
 			player.updateLogic();
+
+			monster.updateLogic();
 		}
 
 		window.clear();
 		
 		map.draw(&window);
-
 		player.draw(&window);
 
+		monster.draw(&window);
+
 		window.display();
+		accumulator += clock.restart();
 
 	}
 

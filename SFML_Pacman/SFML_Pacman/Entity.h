@@ -7,6 +7,7 @@
 class Entity {
 
 public:
+	Entity();
 	Entity(Map* mapToLoad, std::string path, sf::Vector2f position);
 
 	void draw(sf::RenderWindow* window);
@@ -22,9 +23,15 @@ protected:
 	void setDirection(sf::Vector2f direction);
 	void mapCollision();
 	bool collidesWithWall(sf::Vector2f pos);
-	void onDirChange() {};
+
+	virtual void onDirChange() {};
+	virtual void onWallHit() {};
 
 };
+
+Entity::Entity() {
+
+}
 
 Entity::Entity(Map* mapToLoad, std::string path, sf::Vector2f position) {
 	texture.loadFromFile(path);
@@ -50,12 +57,10 @@ inline void Entity::mapCollision() {
 
 	if (collidesWithWall(sprite.getPosition() + dir)) {
 		dir = sf::Vector2f(0, 0);
+		onWallHit();
 	}
 
-	sprite.move(sf::Vector2f(
-		dir.x / 2,
-		dir.y / 2
-	));
+	sprite.move(dir);
 
 	sprite.setPosition(sf::Vector2f(
 		(float)fmod(sprite.getPosition().x, 448),
