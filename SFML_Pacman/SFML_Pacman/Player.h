@@ -14,7 +14,7 @@ public:
 
 private:
 	float animationFrame;
-
+	int puntaje = 0;
 };
 
 Player::Player(Map* mapToLoad, std::string path, sf::Vector2f position) : Entity(mapToLoad, path, position) {
@@ -44,6 +44,8 @@ inline void Player::updateLogic() {
 	mapCollision();
 	if (map->getTile(sprite.getPosition()) == 2) {
 		map->removeTile(sprite.getPosition());
+		puntaje++;
+		std::cout << puntaje << std::endl;
 	}
 }
 

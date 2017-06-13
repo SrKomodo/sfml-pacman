@@ -26,7 +26,7 @@ protected:
 
 Monster::Monster(Map* mapToLoad, std::string path, sf::Vector2f position) : Entity(mapToLoad, path, position) {
 	generator.seed(time(NULL));
-	dir = sf::Vector2f(1, 0);
+	setDirection(sf::Vector2f(1, 0));
 }
 
 inline sf::Vector2f Monster::randomDirection() {
@@ -67,8 +67,9 @@ inline void Monster::updateLogic() {
 }
 
 inline void Monster::onDirChange() {
-	dir = randomDirection();
+	
 }
 
 inline void Monster::onWallHit() {
+	setDirection(randomDirection());
 }
