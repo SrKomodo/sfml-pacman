@@ -41,8 +41,7 @@ int main() {
 
 		while (accumulator > ups) {
 			accumulator -= ups;
-			player.updateLogic();
-
+			player.updateLogic(monster.getPos());
 			monster.updateLogic();
 		}
 

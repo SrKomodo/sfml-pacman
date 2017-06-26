@@ -9,7 +9,7 @@ class Player : public Entity {
 public:
 	Player(Map* mapToLoad, std::string path, sf::Vector2f position);
 	
-	void updateLogic();
+	void updateLogic(sf::Vector2f monsterPos);
 	void onDirChange();
 
 private:
@@ -22,7 +22,15 @@ Player::Player(Map* mapToLoad, std::string path, sf::Vector2f position) : Entity
 	animationFrame = 0;
 }
 
-inline void Player::updateLogic() {
+inline void Player::updateLogic(sf::Vector2f monsterPos) {
+
+	if (
+		sf::Vector2f(sprite.getPosition().x / 16, sprite.getPosition().y/ 16) ==
+		sf::Vector2f(monsterPos.x / 16, monsterPos.y / 16)
+	) {
+		std::cout << "U DED" << std::endl;
+		std::system("exit");
+	}
 	
 	sprite.setTextureRect(sf::IntRect( floorf(animationFrame / 16.f) * 16, 0, 16, 16));
 	animationFrame += 4.f;

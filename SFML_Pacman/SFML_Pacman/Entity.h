@@ -60,7 +60,7 @@ inline void Entity::mapCollision() {
 		onWallHit();
 	}
 
-	sprite.move(dir);
+	sprite.move(sf::Vector2f(dir.x * 2, dir.y * 2));
 
 	sprite.setPosition(sf::Vector2f(
 		(float)fmod(sprite.getPosition().x, 448),

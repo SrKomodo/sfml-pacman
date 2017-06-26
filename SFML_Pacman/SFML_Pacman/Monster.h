@@ -3,8 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <random>
-
-
+#include <chrono>
 
 class Monster : public Entity {
 	using Entity::Entity;
@@ -13,6 +12,7 @@ public:
 	Monster(Map* mapToLoad, std::string path, sf::Vector2f position);
 
 	void updateLogic();
+	sf::Vector2f getPos();
 
 protected:
 
@@ -25,8 +25,8 @@ protected:
 };
 
 Monster::Monster(Map* mapToLoad, std::string path, sf::Vector2f position) : Entity(mapToLoad, path, position) {
-	generator.seed(time(NULL));
-	setDirection(sf::Vector2f(1, 0));
+	generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+	setDirection(randomDirection());
 }
 
 inline sf::Vector2f Monster::randomDirection() {
@@ -66,8 +66,12 @@ inline void Monster::updateLogic() {
 	mapCollision();
 }
 
+inline sf::Vector2f Monster::getPos()
+{
+	return sprite.getPosition();
+}
+
 inline void Monster::onDirChange() {
-	
 }
 
 inline void Monster::onWallHit() {
